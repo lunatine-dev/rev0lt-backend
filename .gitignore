@@ -1,0 +1,7 @@
+node_modules
+.env
+package-lock.json
+secret-key
+pnpm-lock.yaml
+.name
+.env.prod
