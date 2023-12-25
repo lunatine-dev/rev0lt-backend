@@ -1,1 +1,1 @@
-Rev0lt discord bot backend
+Leaderboard backend for Rev0lt
