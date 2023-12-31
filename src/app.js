@@ -21,7 +21,7 @@ const path = require("path"),
     try {
         //connect to db
         await mongoose.connect(process.env.MONGO_URI);
-        fastify.addHook("onRequest", (request, reply, done) => {
+        server.addHook("onRequest", (request, reply, done) => {
             // Set CORS headers for all origins
             reply.header("Cross-Origin-Resource-Policy", "cross-origin");
             done();
