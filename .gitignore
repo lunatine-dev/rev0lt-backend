@@ -5,3 +5,4 @@ secret-key
 pnpm-lock.yaml
 .name
 .env.prod
+src/public/tmp

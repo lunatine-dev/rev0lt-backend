@@ -28,6 +28,10 @@ const path = require("path"),
             origin: process.env.FRONTEND_URL,
         });
         server.register(require("@fastify/helmet"));
+        server.register(require("@fastify/static"), {
+            root: path.join(__dirname, "public"),
+            prefix: "/public/", // optional: default '/'
+        });
         server
             .register(autoload, {
                 dir: path.join(__dirname, "routes"),
