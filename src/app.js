@@ -27,9 +27,6 @@ const path = require("path"),
             // allow from env.FRONTEND_URL
             origin: process.env.FRONTEND_URL,
         });
-        server.register(require("@fastify/helmet"), {
-            crossOriginResourcePolicy: false,
-        });
         server.register(require("@fastify/static"), {
             root: path.join(__dirname, "public"),
             prefix: "/public/", // optional: default '/'
