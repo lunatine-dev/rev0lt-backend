@@ -4,7 +4,7 @@ const routes = (fastify, opts, done) => {
     fastify.get("/:id", async (req, res) => {
         return await Evidence.findById(req.params.id).populate({
             path: "user",
-            select: "-evidence",
+            select: "-evidence -accessToken -refreshToken",
         });
     });
 
