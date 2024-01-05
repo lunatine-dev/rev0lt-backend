@@ -45,10 +45,10 @@ const getUser = (accessToken, type) => {
     });
 };
 
-const tempAccessToken = (discord_id, fastify) => {
+const tempAccessToken = (identifier, fastify) => {
     //generate a temporary access token for the user, this is used for the frontend to set the cookies
     return fastify.jwt.sign(
-        { discord_id },
+        { identifier },
         {
             expiresIn: "15m",
         }
@@ -60,6 +60,7 @@ const routes = (fastify, opts, done) => {
         //get accessToken & refreshToken from cookies and return them,
         //if they don't exist, return 401
         const { token } = req.body;
+        console.log(token);
 
         //verify token
         const decoded = fastify.jwt.verify(token);

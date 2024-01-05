@@ -1,6 +1,15 @@
 const User = require("../../models/User");
 
 const routes = (fastify, opts, done) => {
+    fastify.get(
+        "/@me",
+        { onRequest: [fastify.verifyJWT, fastify.verifyUser] },
+        async (req, res) => {
+            const user = req.user;
+
+            return user;
+        }
+    );
     fastify.get("/", async (req, res) => {
         let users = await User.find(
             {},
