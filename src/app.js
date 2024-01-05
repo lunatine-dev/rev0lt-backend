@@ -14,6 +14,7 @@ const server = require("fastify")({
     cors = require("@fastify/cors");
 const path = require("path"),
     mongoose = require("mongoose");
+const oauthPlugin = require("@fastify/oauth2");
 
 //app logic
 (async () => {
@@ -31,6 +32,23 @@ const path = require("path"),
         await server.register(cors, {
             // allow from env.FRONTEND_URL
             origin: process.env.FRONTEND_URL,
+        });
+        server.register(require("@fastify/helmet"));
+
+        //authentication
+        server.register(require("./plugins/jwt"));
+        server.register(oauthPlugin, {
+            name: "discordOAuth2",
+            scope: ["identify", "guilds"],
+            credentials: {
+                client: {
+                    id: process.env.DISCORD_CLIENT_ID,
+                    secret: process.env.DISCORD_CLIENT_SECRET,
+                },
+                auth: oauthPlugin.DISCORD_CONFIGURATION,
+            },
+            startRedirectPath: "/auth/discord",
+            callbackUri: process.env.DISCORD_CALLBACK_URL,
         });
         server.register(require("@fastify/static"), {
             root: path.join(__dirname, "public"),

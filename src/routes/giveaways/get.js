@@ -6,7 +6,10 @@ const routes = (fastify, opts, done) => {
             .sort({
                 deadline: -1,
             })
-            .populate("winner");
+            .populate({
+                path: "winner",
+                select: "-evidence -accessToken -refreshToken",
+            });
 
         return giveaways;
     });

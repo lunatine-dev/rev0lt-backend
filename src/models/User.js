@@ -30,6 +30,17 @@ const schema = new mongoose.Schema({
         type: String,
         default: "user",
     },
+
+    accessToken: {
+        type: String,
+    },
+    refreshToken: {
+        type: String,
+    },
+    created_at: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 module.exports = mongoose.model("User", schema);
