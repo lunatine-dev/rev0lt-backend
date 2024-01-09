@@ -1,3 +1,4 @@
+const Evidence = require("../../models/Evidence");
 const User = require("../../models/User");
 
 const routes = (fastify, opts, done) => {
@@ -28,6 +29,31 @@ const routes = (fastify, opts, done) => {
 
         return users;
     });
+
+    fastify.get(
+        "/:id",
+        { onRequest: [fastify.verifyJWT, fastify.verifyUser] },
+        async (req, res) => {
+            if (req?.user.role !== "admin")
+                return res
+                    .code(403)
+                    .send({ message: "You do not have permission" });
+
+            const user = await User.findById(req.params.id);
+
+            if (!user)
+                return res.code(404).send({ message: "User does not exist" });
+
+            const evidence = await Evidence.find({
+                user: req.params.id,
+            });
+
+            delete user.accessToken;
+            delete user.refreshToken;
+
+            return { user, evidence };
+        }
+    );
 
     done();
 };
