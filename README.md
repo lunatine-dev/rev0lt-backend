@@ -1,1 +1,1 @@
-Leaderboard backend for Rev0lt
+Leaderboard backend for Rev0lt!
